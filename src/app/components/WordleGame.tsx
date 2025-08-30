@@ -61,6 +61,7 @@ export default function WordleGame() {
   const [showStats, setShowStats] = useState(false);
   const [shake, setShake] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [flipRow, setFlipRow] = useState<number | null>(null);
 
   // Save game state to localStorage
   useEffect(() => {
@@ -151,6 +152,9 @@ export default function WordleGame() {
       updateStats(isWon, newAttempts.length);
     }
 
+    // Trigger flip animation for the current row
+    setFlipRow(gameState.attempts.length);
+
     setGameState((prev) => ({
       ...prev,
       attempts: newAttempts,
@@ -158,6 +162,9 @@ export default function WordleGame() {
       gameStatus: isWon ? "won" : isLost ? "lost" : "playing",
       keyboardState: newKeyboardState,
     }));
+
+    // Reset flip animation after animation completes
+    setTimeout(() => setFlipRow(null), 1000);
   }, [gameState, updateStats]);
 
   const resetGame = useCallback(() => {
@@ -171,6 +178,7 @@ export default function WordleGame() {
     }));
     setShowStats(false);
     setShowShare(false);
+    setFlipRow(null);
   }, []);
 
   const shareResult = useCallback(() => {
@@ -272,9 +280,9 @@ export default function WordleGame() {
       case "present":
         return "bg-yellow-500 text-white";
       case "absent":
-        return "bg-gray-500 text-white";
+        return "bg-gray-500 text-white opacity-50";
       default:
-        return "bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600";
+        return "bg-gray-200 hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400";
     }
   };
 
@@ -414,7 +422,7 @@ export default function WordleGame() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: rowIndex * 0.1 }}
-              className={`flex gap-2 mb-2 ${
+              className={`flex gap-2 mb-2 justify-center ${
                 shake && rowIndex === gameState.attempts.length
                   ? "animate-shake"
                   : ""
@@ -444,29 +452,68 @@ export default function WordleGame() {
                           : "border-gray-300 dark:border-gray-600"
                       }
                       ${
-                        state === "correct"
-                          ? "bg-green-500 border-green-500 text-white"
-                          : ""
-                      }
-                      ${
-                        state === "present"
-                          ? "bg-yellow-500 border-yellow-500 text-white"
-                          : ""
-                      }
-                      ${
-                        state === "absent"
-                          ? "bg-gray-500 border-gray-500 text-white"
-                          : ""
-                      }
-                      ${
                         state === "unused"
                           ? "bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                           : ""
                       }
                     `}
-                    initial={letter ? { scale: 0.8, rotateY: 0 } : false}
-                    animate={letter ? { scale: 1, rotateY: 360 } : false}
-                    transition={{ duration: 0.3, delay: colIndex * 0.1 }}
+                    initial={false}
+                    animate={
+                      flipRow === rowIndex && !isCurrentRow
+                        ? {
+                            rotateX: [0, 90, 0],
+                            backgroundColor: [
+                              "rgb(255, 255, 255)",
+                              "rgb(255, 255, 255)",
+                              state === "correct"
+                                ? "rgb(34, 197, 94)"
+                                : state === "present"
+                                ? "rgb(234, 179, 8)"
+                                : "rgb(107, 114, 128)",
+                            ],
+                            borderColor: [
+                              "rgb(156, 163, 175)",
+                              "rgb(156, 163, 175)",
+                              state === "correct"
+                                ? "rgb(34, 197, 94)"
+                                : state === "present"
+                                ? "rgb(234, 179, 8)"
+                                : "rgb(107, 114, 128)",
+                            ],
+                            color: [
+                              "rgb(17, 24, 39)",
+                              "rgb(17, 24, 39)",
+                              "rgb(255, 255, 255)",
+                            ],
+                          }
+                        : {
+                            backgroundColor:
+                              state === "correct"
+                                ? "rgb(34, 197, 94)"
+                                : state === "present"
+                                ? "rgb(234, 179, 8)"
+                                : state === "absent"
+                                ? "rgb(107, 114, 128)"
+                                : "rgb(255, 255, 255)",
+                            borderColor:
+                              state === "correct"
+                                ? "rgb(34, 197, 94)"
+                                : state === "present"
+                                ? "rgb(234, 179, 8)"
+                                : state === "absent"
+                                ? "rgb(107, 114, 128)"
+                                : "rgb(156, 163, 175)",
+                            color:
+                              state === "unused"
+                                ? "rgb(17, 24, 39)"
+                                : "rgb(255, 255, 255)",
+                          }
+                    }
+                    transition={{
+                      duration: 0.6,
+                      delay: colIndex * 0.1,
+                      times: [0, 0.5, 1],
+                    }}
                   >
                     {letter}
                   </motion.div>
