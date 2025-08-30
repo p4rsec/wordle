@@ -2,140 +2,10 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FIVE_LETTER_WORDS } from "../data/words";
 
-// Comprehensive word list with 5-letter programming/tech words
-const WORDS = [
-  "REACT",
-  "NEXT",
-  "NODE",
-  "RUST",
-  "SWIFT",
-  "KOTLIN",
-  "DART",
-  "PHP",
-  "JAVA",
-  "SCALA",
-  "HASKELL",
-  "ELIXIR",
-  "CLOJURE",
-  "OCAML",
-  "ERLANG",
-  "FALCON",
-  "CRYSTAL",
-  "NIM",
-  "ZIG",
-  "V",
-  "CARBON",
-  "MOJO",
-  "BUN",
-  "DENO",
-  "SVELTE",
-  "VUE",
-  "ANGULAR",
-  "EMBER",
-  "BACKBONE",
-  "JQUERY",
-  "LODASH",
-  "MOMENT",
-  "AXIOS",
-  "FETCH",
-  "GRAPHQL",
-  "REST",
-  "API",
-  "JSON",
-  "YAML",
-  "TOML",
-  "DOCKER",
-  "KUBERNETES",
-  "HELM",
-  "PODMAN",
-  "BUILDKIT",
-  "COMPOSE",
-  "SWARM",
-  "MESOS",
-  "NOMAD",
-  "CONSUL",
-  "REDIS",
-  "MONGO",
-  "POSTGRES",
-  "MYSQL",
-  "SQLITE",
-  "CASSANDRA",
-  "DYNAMO",
-  "FIRESTORE",
-  "COSMOS",
-  "NEO4J",
-  "ELASTIC",
-  "LOGSTASH",
-  "KIBANA",
-  "BEATS",
-  "PROMETHEUS",
-  "GRAFANA",
-  "JAEGER",
-  "ZIPKIN",
-  "SENTRY",
-  "DATADOG",
-  "GITHUB",
-  "GITLAB",
-  "BITBUCKET",
-  "AZURE",
-  "AWS",
-  "GCP",
-  "DIGITALOCEAN",
-  "HEROKU",
-  "VERCEL",
-  "NETLIFY",
-  "WEBPACK",
-  "VITE",
-  "ROLLUP",
-  "ESBUILD",
-  "SWC",
-  "BABEL",
-  "TYPESCRIPT",
-  "COFFEE",
-  "LIVESCRIPT",
-  "ELM",
-  "REASON",
-  "RESCRIPT",
-  "PURESCRIPT",
-  "IDRIS",
-  "AGDA",
-  "COQ",
-  "LEAN",
-  "ISABELLE",
-  "HOL",
-  "ACL2",
-  "PYTHON",
-  "RUBY",
-  "GO",
-  "PERL",
-  "LUA",
-  "JULIA",
-  "R",
-  "MATLAB",
-  "OCTAVE",
-  "SCILAB",
-  "FORTRAN",
-  "COBOL",
-  "PASCAL",
-  "ADA",
-  "ALGOL",
-  "BASIC",
-  "LOGO",
-  "SMALLTALK",
-  "SELF",
-  "IO",
-  "FACTOR",
-  "FORTH",
-  "LISP",
-  "SCHEME",
-  "RACKET",
-  "CLOJURE",
-  "ARC",
-  "HY",
-  "JANET",
-  "CARBON",
-];
+// Use only 5-letter words
+const WORDS = FIVE_LETTER_WORDS;
 
 const WORD_LENGTH = 5;
 const MAX_ATTEMPTS = 6;
@@ -160,13 +30,15 @@ interface GameState {
 export default function WordleGame() {
   const [gameState, setGameState] = useState<GameState>(() => {
     // Load from localStorage or create new game
-    const saved = localStorage.getItem("wordle-game");
-    if (saved) {
-      const parsed = JSON.parse(saved);
-      // Check if it's the same day
-      const today = new Date().toDateString();
-      if (parsed.date === today) {
-        return parsed.state;
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("wordle-game");
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        // Check if it's the same day
+        const today = new Date().toDateString();
+        if (parsed.date === today) {
+          return parsed.state;
+        }
       }
     }
 
@@ -192,11 +64,13 @@ export default function WordleGame() {
 
   // Save game state to localStorage
   useEffect(() => {
-    const saveData = {
-      state: gameState,
-      date: new Date().toDateString(),
-    };
-    localStorage.setItem("wordle-game", JSON.stringify(saveData));
+    if (typeof window !== "undefined") {
+      const saveData = {
+        state: gameState,
+        date: new Date().toDateString(),
+      };
+      localStorage.setItem("wordle-game", JSON.stringify(saveData));
+    }
   }, [gameState]);
 
   const addLetter = useCallback(
@@ -385,7 +259,7 @@ export default function WordleGame() {
             Wordle
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mb-4">
-            Guess the 5-letter programming word
+            Guess the 5-letter word
           </p>
           <div className="flex justify-center gap-4">
             <motion.button

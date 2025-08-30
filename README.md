@@ -73,6 +73,8 @@ src/
 ├── app/
 │   ├── components/
 │   │   └── WordleGame.tsx    # Main game component
+│   ├── data/
+│   │   └── words.ts          # 5-letter word list
 │   ├── globals.css           # Global styles and animations
 │   ├── layout.tsx            # Root layout
 │   └── page.tsx              # Main page
@@ -129,10 +131,10 @@ Track your performance with comprehensive statistics:
 
 ### Adding New Words
 
-Edit the `WORDS` array in `src/app/components/WordleGame.tsx`:
+Edit the `WORDS` array in `src/app/data/words.ts`:
 
 ```typescript
-const WORDS = [
+export const WORDS = [
   "REACT",
   "NEXT",
   "NODE",
