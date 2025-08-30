@@ -43,7 +43,7 @@ export default function WordleGame() {
     }
 
     return {
-      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)],
+      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase(),
       attempts: [],
       currentAttempt: "",
       gameStatus: "playing",
@@ -163,7 +163,7 @@ export default function WordleGame() {
   const resetGame = useCallback(() => {
     setGameState((prev) => ({
       ...prev,
-      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)],
+      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase(),
       attempts: [],
       currentAttempt: "",
       gameStatus: "playing",
@@ -222,8 +222,45 @@ export default function WordleGame() {
     index: number,
     attempt: string
   ): LetterState => {
+    // If no attempt or no letter, return unused
+    if (!attempt || !letter) return "unused";
+
+    // If letter is in correct position, it's correct
     if (letter === gameState.targetWord[index]) return "correct";
-    if (gameState.targetWord.includes(letter)) return "present";
+
+    // Count how many times this letter appears in the target word
+    const targetLetterCount = gameState.targetWord
+      .split("")
+      .filter((l) => l === letter).length;
+
+    // Count how many times this letter appears in correct positions in the attempt
+    const correctPositions = attempt
+      .split("")
+      .filter((l, i) => l === letter && l === gameState.targetWord[i]).length;
+
+    // Count how many times this letter appears before the current position in the attempt
+    const previousOccurrences = attempt
+      .slice(0, index)
+      .split("")
+      .filter((l) => l === letter).length;
+
+    // Count how many times this letter appears in correct positions before the current position
+    const previousCorrect = attempt
+      .slice(0, index)
+      .split("")
+      .filter((l, i) => l === letter && l === gameState.targetWord[i]).length;
+
+    // Available letters for yellow highlighting = total in target - correct positions
+    const availableForYellow = targetLetterCount - correctPositions;
+
+    // If we haven't exceeded the available letters for yellow highlighting
+    if (
+      previousOccurrences - previousCorrect < availableForYellow &&
+      gameState.targetWord.includes(letter)
+    ) {
+      return "present";
+    }
+
     return "absent";
   };
 
