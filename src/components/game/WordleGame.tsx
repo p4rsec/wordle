@@ -122,6 +122,14 @@ export default function WordleGame() {
       return;
     }
 
+    // Check if the word is valid (exists in the word list)
+    const isValidWord = WORDS.includes(gameState.currentAttempt.toLowerCase());
+    if (!isValidWord) {
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      return;
+    }
+
     const newAttempts = [...gameState.attempts, gameState.currentAttempt];
     const newKeyboardState = { ...gameState.keyboardState };
 
