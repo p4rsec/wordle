@@ -1,4 +1,4 @@
-name: Build and Test Wordle
+name: CI - Build and Test
 
 on:
   pull_request:
@@ -14,16 +14,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "latest"
-          cache: "npm"
-
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
           version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+          cache: "pnpm"
 
       - name: Get pnpm store directory
         shell: bash
@@ -43,17 +43,6 @@ jobs:
 
       - name: Check TypeScript
         run: pnpm tsc --noEmit
-
-      - name: Build project
-        run: pnpm build
-
-      - name: Test Next.js build output
-        run: |
-          if [ ! -d ".next" ]; then
-            echo "❌ Next.js build output directory '.next' not found"
-            exit 1
-          fi
-          echo "✅ Next.js build output verified successfully"
 
       - name: Build for Cloudflare
         run: pnpm build:cloudflare
