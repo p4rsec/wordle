@@ -34,11 +34,23 @@ export default function GameGrid({
         <motion.div
           key={rowIndex}
           initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: rowIndex * 0.1 }}
-          className={`flex gap-2 mb-2 justify-center ${
-            shake && rowIndex === attempts.length ? "animate-shake" : ""
-          }`}
+          animate={
+            shake && rowIndex === attempts.length
+              ? {
+                  opacity: 1,
+                  x: [-5, 5, -5, 5, -5, 5, 0],
+                }
+              : { opacity: 1, x: 0 }
+          }
+          transition={
+            shake && rowIndex === attempts.length
+              ? {
+                  duration: 0.5,
+                  ease: "easeInOut",
+                }
+              : { delay: rowIndex * 0.1 }
+          }
+          className={`flex gap-2 mb-2 justify-center`}
         >
           {Array.from({ length: WORD_LENGTH }, (_, colIndex) => {
             const isCurrentRow = rowIndex === attempts.length;
