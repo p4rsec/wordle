@@ -169,16 +169,24 @@ Adjust constants in `src/components/game/gameLogic.ts`:
 
 ## 🚀 Deployment
 
-### Vercel (Recommended)
+### Cloudflare Pages (Recommended)
 
 1. Push your code to GitHub
-2. Connect your repository to Vercel
-3. Deploy automatically
+2. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+3. Navigate to Pages and click "Create a project"
+4. Connect your GitHub repository
+5. Configure build settings:
+   - **Framework preset**: Next.js
+   - **Build command**: `pnpm build`
+   - **Build output directory**: `.next`
+   - **Root directory**: `/` (leave empty)
+6. Click "Save and Deploy"
 
 ### Other Platforms
 
 The app can be deployed to any platform that supports Next.js:
 
+- Vercel
 - Netlify
 - Railway
 - DigitalOcean App Platform
@@ -194,7 +202,7 @@ The app can be deployed to any platform that supports Next.js:
 
 ## 📝 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](./LICENSE).
 
 ## 🙏 Acknowledgments
 
