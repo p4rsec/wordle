@@ -12,7 +12,8 @@ interface GameGridProps {
   getLetterState: (
     letter: string,
     index: number,
-    attempt: string
+    attempt: string,
+    targetWord: string
   ) => LetterState;
 }
 
