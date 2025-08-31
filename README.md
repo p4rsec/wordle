@@ -1,19 +1,20 @@
 # 🎯 Wordle Game
 
-A modern, animated Wordle game built with Next.js 15, React 19, TypeScript, and Tailwind CSS 4. Features programming-themed words and smooth animations powered by Framer Motion.
+A modern, animated Wordle game built with Next.js 15, React 19, TypeScript, and Tailwind CSS 4. Features a comprehensive 5-letter word list and smooth animations powered by Framer Motion.
 
 ## ✨ Features
 
 - **Modern Tech Stack**: Built with the latest Next.js 15, React 19, and Tailwind CSS 4
-- **Smooth Animations**: Beautiful animations using Framer Motion
-- **Programming Words**: 5-letter programming and technology-related words
-- **Dark Mode Support**: Automatic dark mode detection and styling
+- **Smooth Animations**: Beautiful flip animations and transitions using Framer Motion
+- **Comprehensive Word List**: 2,315 carefully curated 5-letter words
+- **Dark Mode Support**: Automatic dark mode detection and optimized styling
 - **Statistics Tracking**: Track your games played, win rate, and streaks
 - **Share Results**: Share your game results with emoji squares
 - **Local Storage**: Game state persists between sessions
 - **Responsive Design**: Works perfectly on desktop and mobile
 - **Virtual Keyboard**: On-screen keyboard with visual feedback
 - **Keyboard Support**: Full keyboard navigation support
+- **Smart Letter Highlighting**: Advanced logic for duplicate letter handling
 
 ## 🚀 Getting Started
 
@@ -47,7 +48,7 @@ pnpm dev
 
 ## 🎮 How to Play
 
-1. **Objective**: Guess the 5-letter programming word in 6 attempts
+1. **Objective**: Guess the 5-letter word in 6 attempts
 2. **Input**: Type letters using your keyboard or the virtual keyboard
 3. **Feedback**:
    - 🟩 Green: Letter is in the correct position
@@ -70,14 +71,27 @@ pnpm dev
 
 ```
 src/
-├── app/
-│   ├── components/
-│   │   └── WordleGame.tsx    # Main game component
-│   ├── data/
-│   │   └── words.ts          # 5-letter word list
-│   ├── globals.css           # Global styles and animations
-│   ├── layout.tsx            # Root layout
-│   └── page.tsx              # Main page
+├── components/               # Reusable components
+│   ├── index.ts             # Main components export
+│   └── game/                # Game-specific components
+│       ├── index.ts         # Game components export
+│       ├── WordleGame.tsx   # Main game orchestrator
+│       ├── GameHeader.tsx   # Header component
+│       ├── GameGrid.tsx     # Word grid component
+│       ├── VirtualKeyboard.tsx # Keyboard component
+│       ├── GameStatus.tsx   # Status component
+│       ├── StatsModal.tsx   # Stats modal component
+│       ├── ShareNotification.tsx # Share notification
+│       └── gameLogic.ts     # Game logic utilities
+├── data/                    # Data files
+│   └── words.ts             # 5-letter word list (2,315 words)
+├── types/                   # TypeScript type definitions
+│   ├── index.ts             # Main types export
+│   └── game.ts              # Game-specific types
+├── app/                     # Next.js app directory
+│   ├── globals.css          # Global styles and animations
+│   ├── layout.tsx           # Root layout
+│   └── page.tsx             # Main page
 ├── package.json
 └── README.md
 ```
@@ -86,14 +100,15 @@ src/
 
 ### Animations
 
-- **Entry Animations**: Staggered animations for game grid and keyboard
-- **Letter Animations**: 3D flip animations when letters are entered
+- **Flip Animations**: 3D flip animations when submitting words with color reveals
+- **Staggered Animations**: Smooth entry animations for game grid and keyboard
 - **Shake Animation**: Visual feedback for invalid attempts
 - **Modal Animations**: Smooth transitions for stats and share modals
 - **Hover Effects**: Interactive button animations
 
 ### Game Logic
 
+- **Advanced Letter Highlighting**: Smart handling of duplicate letters
 - **Word Validation**: Ensures 5-letter words only
 - **State Management**: Comprehensive game state with React hooks
 - **Persistence**: Local storage for game progress and statistics
@@ -102,20 +117,19 @@ src/
 ### UI/UX
 
 - **Responsive Design**: Optimized for all screen sizes
-- **Dark Mode**: Automatic theme detection
+- **Dark Mode**: Optimized contrast and visibility in dark mode
 - **Accessibility**: Keyboard navigation and screen reader support
-- **Visual Feedback**: Color-coded keyboard and grid tiles
+- **Visual Feedback**: Color-coded keyboard with opacity states for used letters
+- **Centered Layout**: Properly centered word grid and keyboard
 
-## 🎯 Word Categories
+## 📚 Word List
 
-The game includes 5-letter words from various programming and technology categories:
+The game features a comprehensive list of 2,315 carefully curated 5-letter words, providing a rich and varied gameplay experience. The word list includes:
 
-- **Programming Languages**: REACT, NEXT, RUST, SWIFT, KOTLIN, DART, PHP, JAVA, SCALA
-- **Frameworks & Tools**: VUE, ANGULAR, DOCKER, REDIS, MONGO, GITHUB, AWS, GCP
-- **Build Tools**: WEBPACK, VITE, ROLLUP, ESBUILD, SWC, BABEL
-- **Databases**: POSTGRES, MYSQL, SQLITE, CASSANDRA, DYNAMO
-- **Monitoring**: ELASTIC, KIBANA, PROMETHEUS, GRAFANA, SENTRY
-- **And many more...**
+- Common English words
+- Everyday vocabulary
+- Accessible language for all players
+- Balanced difficulty levels
 
 ## 📊 Statistics
 
@@ -131,26 +145,24 @@ Track your performance with comprehensive statistics:
 
 ### Adding New Words
 
-Edit the `WORDS` array in `src/app/data/words.ts`:
+Edit the `WORDS` array in `src/data/words.ts`:
 
 ```typescript
 export const WORDS = [
-  "REACT",
-  "NEXT",
-  "NODE",
-  "RUST",
-  "SWIFT",
+  "ABACK",
+  "ABASE",
+  "ABATE",
   // Add your 5-letter words here
 ];
 ```
 
 ### Styling
 
-Modify the Tailwind classes in the component or update `src/app/globals.css` for custom animations.
+Modify the Tailwind classes in the components or update `src/app/globals.css` for custom animations.
 
 ### Game Settings
 
-Adjust constants in the component:
+Adjust constants in `src/components/game/gameLogic.ts`:
 
 - `WORD_LENGTH`: Length of target words (default: 5)
 - `MAX_ATTEMPTS`: Maximum number of guesses (default: 6)
@@ -192,4 +204,4 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-**Happy coding and happy guessing! 🎉**
+**Happy guessing! 🎉**
