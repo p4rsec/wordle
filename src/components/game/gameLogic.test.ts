@@ -5,7 +5,7 @@ import {
   WORD_LENGTH,
   MAX_ATTEMPTS,
 } from "./gameLogic";
-import { LetterState } from "../../../types";
+import { LetterState } from "../../types";
 
 describe("gameLogic", () => {
   describe("getLetterState", () => {

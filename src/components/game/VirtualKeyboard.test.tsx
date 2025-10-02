@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import VirtualKeyboard from "./VirtualKeyboard";
-import { LetterState } from "../../../types";
+import { LetterState } from "../../types";
 
 describe("VirtualKeyboard", () => {
   const mockOnKeyPress = jest.fn();

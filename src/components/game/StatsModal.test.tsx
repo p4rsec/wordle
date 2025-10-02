@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import StatsModal from "./StatsModal";
-import { GameStats } from "../../../types";
+import { GameStats } from "../../types";
 
 describe("StatsModal", () => {
   const mockOnClose = jest.fn();
