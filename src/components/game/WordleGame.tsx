@@ -218,6 +218,11 @@ export default function WordleGame() {
   // Handle keyboard input
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore input if modifier keys are pressed (Ctrl, Alt, Meta, Shift)
+      if (e.ctrlKey || e.altKey || e.metaKey) {
+        return;
+      }
+
       if (e.key === "Enter") {
         submitAttempt();
       } else if (e.key === "Backspace") {
