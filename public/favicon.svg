@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" fill="#ffffff"/>
+  <!-- Wordle grid pattern -->
+  <rect x="4" y="4" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="10" y="4" width="4" height="4" fill="#c9b458" stroke="#000" stroke-width="0.5"/>
+  <rect x="16" y="4" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="22" y="4" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="28" y="4" width="2" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  
+  <rect x="4" y="10" width="4" height="4" fill="#787c7e" stroke="#000" stroke-width="0.5"/>
+  <rect x="10" y="10" width="4" height="4" fill="#c9b458" stroke="#000" stroke-width="0.5"/>
+  <rect x="16" y="10" width="4" height="4" fill="#787c7e" stroke="#000" stroke-width="0.5"/>
+  <rect x="22" y="10" width="4" height="4" fill="#787c7e" stroke="#000" stroke-width="0.5"/>
+  <rect x="28" y="10" width="2" height="4" fill="#787c7e" stroke="#000" stroke-width="0.5"/>
+  
+  <rect x="4" y="16" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="10" y="16" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="16" y="16" width="4" height="4" fill="#c9b458" stroke="#000" stroke-width="0.5"/>
+  <rect x="22" y="16" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="28" y="16" width="2" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  
+  <rect x="4" y="22" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="10" y="22" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="16" y="22" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="22" y="22" width="4" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="28" y="22" width="2" height="4" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  
+  <rect x="4" y="28" width="4" height="2" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="10" y="28" width="4" height="2" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="16" y="28" width="4" height="2" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="22" y="28" width="4" height="2" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+  <rect x="28" y="28" width="2" height="2" fill="#6aaa64" stroke="#000" stroke-width="0.5"/>
+</svg>
