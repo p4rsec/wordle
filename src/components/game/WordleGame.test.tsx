@@ -23,8 +23,7 @@ describe("WordleGame", () => {
   it("renders the game interface", () => {
     render(<WordleGame />);
 
-    expect(screen.getByText("Wordle")).toBeInTheDocument();
-    expect(screen.getByText("Guess the 5-letter word")).toBeInTheDocument();
+    expect(screen.getByText("WORDLE")).toBeInTheDocument();
     expect(screen.getByText("Stats")).toBeInTheDocument();
   });
 
@@ -206,7 +205,7 @@ describe("WordleGame", () => {
       )[0];
 
     if (firstRow) {
-      const cells = firstRow.querySelectorAll('[class*="w-12 h-12"]');
+      const cells = firstRow.querySelectorAll('[class*="w-14 h-14"]');
       expect(cells.length).toBe(5);
     }
   });

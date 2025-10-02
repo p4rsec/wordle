@@ -23,7 +23,7 @@ describe("VirtualKeyboard", () => {
     // Should have 3 rows
     const rows = screen
       .getAllByRole("generic")
-      .filter((el) => el.className.includes("flex gap-1.5 justify-center"));
+      .filter((el) => el.className.includes("flex gap-1 justify-center"));
     expect(rows).toHaveLength(3);
   });
 
