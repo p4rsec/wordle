@@ -15,7 +15,6 @@ import {
 import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid";
 import VirtualKeyboard from "./VirtualKeyboard";
-import GameStatus from "./GameStatus";
 import ResultModal from "./ResultModal";
 import StatsModal from "./StatsModal";
 import ShareNotification from "./ShareNotification";

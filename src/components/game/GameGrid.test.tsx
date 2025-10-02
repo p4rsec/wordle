@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import GameGrid from "./GameGrid";
-import { LetterState } from "../../../types";
 
 describe("GameGrid", () => {
   const mockGetLetterState = jest.fn();

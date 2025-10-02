@@ -10,7 +10,7 @@ interface VirtualKeyboardProps {
 }
 
 export default function VirtualKeyboard({
-  keyboardState,
+  keyboardState: _keyboardState,
   onKeyPress,
   getKeyboardClass,
 }: VirtualKeyboardProps) {
