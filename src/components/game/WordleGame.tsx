@@ -133,6 +133,16 @@ export default function WordleGame() {
       return;
     }
 
+    // Check if the word has already been entered
+    const isDuplicateWord = gameState.attempts.includes(
+      gameState.currentAttempt
+    );
+    if (isDuplicateWord) {
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      return;
+    }
+
     const newAttempts = [...gameState.attempts, gameState.currentAttempt];
     const newKeyboardState = { ...gameState.keyboardState };
 
