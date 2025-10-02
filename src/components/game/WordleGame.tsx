@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FIVE_LETTER_WORDS } from "../../data/words";
+import { WORDLE_LA } from "../../data/wordle-La";
+import { WORDLE_TA } from "../../data/wordle-Ta";
 import { GameState, LetterState } from "../../types";
 import {
   getLetterState,
@@ -18,8 +19,7 @@ import GameStatus from "./GameStatus";
 import StatsModal from "./StatsModal";
 import ShareNotification from "./ShareNotification";
 
-// Use only 5-letter words
-const WORDS = FIVE_LETTER_WORDS;
+const VALID_WORDS = WORDLE_LA.concat(WORDLE_TA);
 
 export default function WordleGame() {
   const [gameState, setGameState] = useState<GameState>(() => {
@@ -37,7 +37,8 @@ export default function WordleGame() {
     }
 
     return {
-      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase(),
+      targetWord:
+        WORDLE_LA[Math.floor(Math.random() * WORDLE_LA.length)].toUpperCase(),
       attempts: [],
       currentAttempt: "",
       gameStatus: "playing",
@@ -123,7 +124,9 @@ export default function WordleGame() {
     }
 
     // Check if the word is valid (exists in the word list)
-    const isValidWord = WORDS.includes(gameState.currentAttempt.toLowerCase());
+    const isValidWord = VALID_WORDS.includes(
+      gameState.currentAttempt.toLowerCase()
+    );
     if (!isValidWord) {
       setShake(true);
       setTimeout(() => setShake(false), 500);
@@ -172,7 +175,8 @@ export default function WordleGame() {
   const resetGame = useCallback(() => {
     setGameState((prev) => ({
       ...prev,
-      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase(),
+      targetWord:
+        WORDLE_LA[Math.floor(Math.random() * WORDLE_LA.length)].toUpperCase(),
       attempts: [],
       currentAttempt: "",
       gameStatus: "playing",
