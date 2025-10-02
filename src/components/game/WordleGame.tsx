@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FIVE_LETTER_WORDS } from "../../data/words";
+import { WORDLE_LA } from "../../data/wordle-La";
+import { WORDLE_TA } from "../../data/wordle-Ta";
 import { GameState, LetterState } from "../../types";
 import {
   getLetterState,
@@ -14,12 +15,11 @@ import {
 import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid";
 import VirtualKeyboard from "./VirtualKeyboard";
-import GameStatus from "./GameStatus";
+import ResultModal from "./ResultModal";
 import StatsModal from "./StatsModal";
 import ShareNotification from "./ShareNotification";
 
-// Use only 5-letter words
-const WORDS = FIVE_LETTER_WORDS;
+const VALID_WORDS = WORDLE_LA.concat(WORDLE_TA);
 
 export default function WordleGame() {
   const [gameState, setGameState] = useState<GameState>(() => {
@@ -37,7 +37,8 @@ export default function WordleGame() {
     }
 
     return {
-      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase(),
+      targetWord:
+        WORDLE_LA[Math.floor(Math.random() * WORDLE_LA.length)].toUpperCase(),
       attempts: [],
       currentAttempt: "",
       gameStatus: "playing",
@@ -55,6 +56,7 @@ export default function WordleGame() {
   const [showStats, setShowStats] = useState(false);
   const [shake, setShake] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showResult, setShowResult] = useState(false);
   const [flipRow, setFlipRow] = useState<number | null>(null);
 
   // Save game state to localStorage
@@ -67,6 +69,14 @@ export default function WordleGame() {
       localStorage.setItem("wordle-game", JSON.stringify(saveData));
     }
   }, [gameState]);
+
+  // Show result modal when game ends
+  useEffect(() => {
+    if (gameState.gameStatus === "won" || gameState.gameStatus === "lost") {
+      const timer = setTimeout(() => setShowResult(true), 1500); // Show after flip animation
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.gameStatus]);
 
   const addLetter = useCallback(
     (letter: string) => {
@@ -122,6 +132,26 @@ export default function WordleGame() {
       return;
     }
 
+    // Check if the word is valid (exists in the word list)
+    const isValidWord = VALID_WORDS.includes(
+      gameState.currentAttempt.toLowerCase()
+    );
+    if (!isValidWord) {
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      return;
+    }
+
+    // Check if the word has already been entered
+    const isDuplicateWord = gameState.attempts.includes(
+      gameState.currentAttempt
+    );
+    if (isDuplicateWord) {
+      setShake(true);
+      setTimeout(() => setShake(false), 500);
+      return;
+    }
+
     const newAttempts = [...gameState.attempts, gameState.currentAttempt];
     const newKeyboardState = { ...gameState.keyboardState };
 
@@ -164,7 +194,8 @@ export default function WordleGame() {
   const resetGame = useCallback(() => {
     setGameState((prev) => ({
       ...prev,
-      targetWord: WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase(),
+      targetWord:
+        WORDLE_LA[Math.floor(Math.random() * WORDLE_LA.length)].toUpperCase(),
       attempts: [],
       currentAttempt: "",
       gameStatus: "playing",
@@ -172,6 +203,7 @@ export default function WordleGame() {
     }));
     setShowStats(false);
     setShowShare(false);
+    setShowResult(false);
     setFlipRow(null);
   }, []);
 
@@ -196,6 +228,11 @@ export default function WordleGame() {
   // Handle keyboard input
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore input if modifier keys are pressed (Ctrl, Alt, Meta, Shift)
+      if (e.ctrlKey || e.altKey || e.metaKey) {
+        return;
+      }
+
       if (e.key === "Enter") {
         submitAttempt();
       } else if (e.key === "Backspace") {
@@ -222,16 +259,17 @@ export default function WordleGame() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex flex-col items-center justify-center p-2 sm:p-4">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md"
+        className="w-full max-w-md mx-auto"
       >
         <GameHeader
           gameStatus={gameState.gameStatus}
           onStatsClick={() => setShowStats(!showStats)}
           onShareClick={shareResult}
+          onPlayAgainClick={resetGame}
         />
 
         <AnimatePresence>
@@ -255,13 +293,14 @@ export default function WordleGame() {
           getLetterState={handleGetLetterState}
         />
 
-        <AnimatePresence>
-          <GameStatus
-            gameStatus={gameState.gameStatus}
-            targetWord={gameState.targetWord}
-            onPlayAgain={resetGame}
-          />
-        </AnimatePresence>
+        <ResultModal
+          show={showResult}
+          gameStatus={gameState.gameStatus}
+          targetWord={gameState.targetWord}
+          attempts={gameState.attempts}
+          onPlayAgain={resetGame}
+          onClose={() => setShowResult(false)}
+        />
 
         <VirtualKeyboard
           keyboardState={gameState.keyboardState}

@@ -1,5 +1,5 @@
 // 5-letter words for Wordle (from wordle-La.txt)
-export const WORDS = [
+export const WORDLE_LA = [
   "aback",
   "abase",
   "abate",
@@ -2316,6 +2316,3 @@ export const WORDS = [
   "zesty",
   "zonal",
 ];
-
-// All words are exactly 5 letters
-export const FIVE_LETTER_WORDS = WORDS;

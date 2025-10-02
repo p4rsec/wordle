@@ -9,5 +9,6 @@ export { default as GameHeader } from "./GameHeader";
 export { default as GameGrid } from "./GameGrid";
 export { default as VirtualKeyboard } from "./VirtualKeyboard";
 export { default as GameStatus } from "./GameStatus";
+export { default as ResultModal } from "./ResultModal";
 export { default as StatsModal } from "./StatsModal";
 export { default as ShareNotification } from "./ShareNotification";
