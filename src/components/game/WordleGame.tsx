@@ -9,6 +9,7 @@ import {
   getLetterState,
   getKeyboardClass,
   generateShareText,
+  getToastMessage,
   WORD_LENGTH,
   MAX_ATTEMPTS,
 } from "./gameLogic";
@@ -18,6 +19,7 @@ import VirtualKeyboard from "./VirtualKeyboard";
 import ResultModal from "./ResultModal";
 import StatsModal from "./StatsModal";
 import ShareNotification from "./ShareNotification";
+import Toast from "./Toast";
 
 const VALID_WORDS = WORDLE_LA.concat(WORDLE_TA);
 
@@ -58,6 +60,8 @@ export default function WordleGame() {
   const [showShare, setShowShare] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [flipRow, setFlipRow] = useState<number | null>(null);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
 
   // Save game state to localStorage
   useEffect(() => {
@@ -77,6 +81,20 @@ export default function WordleGame() {
       return () => clearTimeout(timer);
     }
   }, [gameState.gameStatus]);
+
+  // Show toast message when game ends
+  useEffect(() => {
+    if (gameState.gameStatus === "won" || gameState.gameStatus === "lost") {
+      const isWon = gameState.gameStatus === "won";
+      const message = getToastMessage(gameState.attempts.length, isWon);
+      setToastMessage(message);
+      setShowToast(true);
+
+      // Auto-hide toast after 3 seconds
+      const timer = setTimeout(() => setShowToast(false), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.gameStatus, gameState.attempts.length]);
 
   const addLetter = useCallback(
     (letter: string) => {
@@ -259,7 +277,7 @@ export default function WordleGame() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 flex flex-col items-center justify-center p-2 sm:p-4">
+    <div className="min-h-screen bg-white dark:bg-gray-900 flex flex-col items-center justify-center p-2 sm:p-4">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -310,6 +328,13 @@ export default function WordleGame() {
             else addLetter(key);
           }}
           getKeyboardClass={handleGetKeyboardClass}
+        />
+
+        {/* Toast notification */}
+        <Toast
+          show={showToast}
+          message={toastMessage}
+          onClose={() => setShowToast(false)}
         />
 
         {/* Instructions */}

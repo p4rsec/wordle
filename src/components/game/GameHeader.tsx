@@ -22,18 +22,15 @@ export default function GameHeader({
       transition={{ delay: 0.2 }}
       className="text-center mb-8"
     >
-      <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
-        Wordle
+      <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
+        WORDLE
       </h1>
-      <p className="text-gray-600 dark:text-gray-300 mb-4">
-        Guess the 5-letter word
-      </p>
       <div className="flex justify-center gap-4">
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onStatsClick}
-          className="text-sm bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-lg transition-colors"
+          className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
         >
           Stats
         </motion.button>
@@ -43,7 +40,7 @@ export default function GameHeader({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onPlayAgainClick}
-              className="text-sm bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-lg transition-colors"
+              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
             >
               Play Again
             </motion.button>
@@ -51,7 +48,7 @@ export default function GameHeader({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={onShareClick}
-              className="text-sm bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg transition-colors"
+              className="text-sm text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
             >
               Share
             </motion.button>

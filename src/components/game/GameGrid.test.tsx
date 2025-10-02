@@ -29,7 +29,7 @@ describe("GameGrid", () => {
     // Each row should have 5 cells
     const cells = screen
       .getAllByRole("generic")
-      .filter((el) => el.className.includes("w-12 h-12 border-2 rounded-lg"));
+      .filter((el) => el.className.includes("w-14 h-14 border-2 rounded-sm"));
     expect(cells).toHaveLength(30); // 6 rows * 5 cells
   });
 
@@ -48,7 +48,7 @@ describe("GameGrid", () => {
     // Check that letters appear in the grid (not keyboard)
     const gridCells = screen
       .getAllByRole("generic")
-      .filter((el) => el.className.includes("w-12 h-12 border-2 rounded-lg"));
+      .filter((el) => el.className.includes("w-14 h-14 border-2 rounded-sm"));
     expect(gridCells.length).toBeGreaterThan(0);
   });
 
@@ -67,7 +67,7 @@ describe("GameGrid", () => {
     // Should show letters from previous attempts in grid cells
     const gridCells = screen
       .getAllByRole("generic")
-      .filter((el) => el.className.includes("w-12 h-12 border-2 rounded-lg"));
+      .filter((el) => el.className.includes("w-14 h-14 border-2 rounded-sm"));
     expect(gridCells.length).toBeGreaterThan(0);
   });
 
@@ -132,7 +132,7 @@ describe("GameGrid", () => {
     // Should render all 6 rows with empty cells
     const cells = screen
       .getAllByRole("generic")
-      .filter((el) => el.className.includes("w-12 h-12 border-2 rounded-lg"));
+      .filter((el) => el.className.includes("w-14 h-14 border-2 rounded-sm"));
     expect(cells).toHaveLength(30);
   });
 
@@ -153,7 +153,7 @@ describe("GameGrid", () => {
     // Other cells should be empty
     const cells = screen
       .getAllByRole("generic")
-      .filter((el) => el.className.includes("w-12 h-12 border-2 rounded-lg"));
+      .filter((el) => el.className.includes("w-14 h-14 border-2 rounded-sm"));
     expect(cells).toHaveLength(30);
   });
 });

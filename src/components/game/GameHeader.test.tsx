@@ -20,8 +20,7 @@ describe("GameHeader", () => {
       />
     );
 
-    expect(screen.getByText("Wordle")).toBeInTheDocument();
-    expect(screen.getByText("Guess the 5-letter word")).toBeInTheDocument();
+    expect(screen.getByText("WORDLE")).toBeInTheDocument();
   });
 
   it("renders stats button for all game statuses", () => {

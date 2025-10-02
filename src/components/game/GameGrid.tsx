@@ -70,7 +70,7 @@ export default function GameGrid({
               <motion.div
                 key={colIndex}
                 className={`
-                  w-12 h-12 border-2 rounded-lg flex items-center justify-center text-xl font-bold
+                  w-14 h-14 border-2 rounded-sm flex items-center justify-center text-2xl font-bold uppercase
                   ${
                     letter
                       ? "border-gray-400"
@@ -91,19 +91,19 @@ export default function GameGrid({
                           "rgb(255, 255, 255)",
                           "rgb(255, 255, 255)",
                           state === "correct"
-                            ? "rgb(34, 197, 94)"
+                            ? "rgb(108, 169, 101)"
                             : state === "present"
-                            ? "rgb(234, 179, 8)"
-                            : "rgb(107, 114, 128)",
+                            ? "rgb(200, 182, 83)"
+                            : "rgb(120, 124, 126)",
                         ],
                         borderColor: [
                           "rgb(156, 163, 175)",
                           "rgb(156, 163, 175)",
                           state === "correct"
-                            ? "rgb(34, 197, 94)"
+                            ? "rgb(108, 169, 101)"
                             : state === "present"
-                            ? "rgb(234, 179, 8)"
-                            : "rgb(107, 114, 128)",
+                            ? "rgb(200, 182, 83)"
+                            : "rgb(120, 124, 126)",
                         ],
                         color: [
                           "rgb(17, 24, 39)",
@@ -114,19 +114,19 @@ export default function GameGrid({
                     : {
                         backgroundColor:
                           state === "correct"
-                            ? "rgb(34, 197, 94)"
+                            ? "rgb(108, 169, 101)"
                             : state === "present"
-                            ? "rgb(234, 179, 8)"
+                            ? "rgb(200, 182, 83)"
                             : state === "absent"
-                            ? "rgb(107, 114, 128)"
+                            ? "rgb(120, 124, 126)"
                             : "rgb(255, 255, 255)",
                         borderColor:
                           state === "correct"
-                            ? "rgb(34, 197, 94)"
+                            ? "rgb(108, 169, 101)"
                             : state === "present"
-                            ? "rgb(234, 179, 8)"
+                            ? "rgb(200, 182, 83)"
                             : state === "absent"
-                            ? "rgb(107, 114, 128)"
+                            ? "rgb(120, 124, 126)"
                             : "rgb(156, 163, 175)",
                         color:
                           state === "unused"
