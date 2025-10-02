@@ -16,6 +16,7 @@ import GameHeader from "./GameHeader";
 import GameGrid from "./GameGrid";
 import VirtualKeyboard from "./VirtualKeyboard";
 import GameStatus from "./GameStatus";
+import ResultModal from "./ResultModal";
 import StatsModal from "./StatsModal";
 import ShareNotification from "./ShareNotification";
 
@@ -56,6 +57,7 @@ export default function WordleGame() {
   const [showStats, setShowStats] = useState(false);
   const [shake, setShake] = useState(false);
   const [showShare, setShowShare] = useState(false);
+  const [showResult, setShowResult] = useState(false);
   const [flipRow, setFlipRow] = useState<number | null>(null);
 
   // Save game state to localStorage
@@ -68,6 +70,14 @@ export default function WordleGame() {
       localStorage.setItem("wordle-game", JSON.stringify(saveData));
     }
   }, [gameState]);
+
+  // Show result modal when game ends
+  useEffect(() => {
+    if (gameState.gameStatus === "won" || gameState.gameStatus === "lost") {
+      const timer = setTimeout(() => setShowResult(true), 1500); // Show after flip animation
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.gameStatus]);
 
   const addLetter = useCallback(
     (letter: string) => {
@@ -194,6 +204,7 @@ export default function WordleGame() {
     }));
     setShowStats(false);
     setShowShare(false);
+    setShowResult(false);
     setFlipRow(null);
   }, []);
 
@@ -259,6 +270,7 @@ export default function WordleGame() {
           gameStatus={gameState.gameStatus}
           onStatsClick={() => setShowStats(!showStats)}
           onShareClick={shareResult}
+          onPlayAgainClick={resetGame}
         />
 
         <AnimatePresence>
@@ -282,13 +294,14 @@ export default function WordleGame() {
           getLetterState={handleGetLetterState}
         />
 
-        <AnimatePresence>
-          <GameStatus
-            gameStatus={gameState.gameStatus}
-            targetWord={gameState.targetWord}
-            onPlayAgain={resetGame}
-          />
-        </AnimatePresence>
+        <ResultModal
+          show={showResult}
+          gameStatus={gameState.gameStatus}
+          targetWord={gameState.targetWord}
+          attempts={gameState.attempts}
+          onPlayAgain={resetGame}
+          onClose={() => setShowResult(false)}
+        />
 
         <VirtualKeyboard
           keyboardState={gameState.keyboardState}
