@@ -2,6 +2,7 @@ import {
   getLetterState,
   getKeyboardClass,
   generateShareText,
+  getToastMessage,
   WORD_LENGTH,
   MAX_ATTEMPTS,
 } from "./gameLogic";
@@ -92,6 +93,40 @@ describe("gameLogic", () => {
       expect(getKeyboardClass("E", keyboardState)).toBe(
         "bg-gray-200 hover:bg-gray-300 dark:bg-gray-500 dark:hover:bg-gray-400"
       );
+    });
+  });
+
+  describe("getToastMessage", () => {
+    it("returns correct message for 1 attempt win", () => {
+      expect(getToastMessage(1, true)).toBe("Genius!");
+    });
+
+    it("returns correct message for 2 attempt win", () => {
+      expect(getToastMessage(2, true)).toBe("Magnificent!");
+    });
+
+    it("returns correct message for 3 attempt win", () => {
+      expect(getToastMessage(3, true)).toBe("Impressive!");
+    });
+
+    it("returns correct message for 4 attempt win", () => {
+      expect(getToastMessage(4, true)).toBe("Splendid!");
+    });
+
+    it("returns correct message for 5 attempt win", () => {
+      expect(getToastMessage(5, true)).toBe("Great!");
+    });
+
+    it("returns correct message for 6 attempt win", () => {
+      expect(getToastMessage(6, true)).toBe("Phew!");
+    });
+
+    it("returns correct message for loss", () => {
+      expect(getToastMessage(6, false)).toBe("Better luck next time!");
+    });
+
+    it("returns default message for unexpected attempts", () => {
+      expect(getToastMessage(0, true)).toBe("Well done!");
     });
   });
 

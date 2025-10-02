@@ -87,3 +87,26 @@ export function generateShareText(
 
   return `Wordle ${attempts.length}/${MAX_ATTEMPTS}\n\n${result}`;
 }
+
+export function getToastMessage(attempts: number, isWon: boolean): string {
+  if (!isWon) {
+    return "Better luck next time!";
+  }
+
+  switch (attempts) {
+    case 1:
+      return "Genius!";
+    case 2:
+      return "Magnificent!";
+    case 3:
+      return "Impressive!";
+    case 4:
+      return "Splendid!";
+    case 5:
+      return "Great!";
+    case 6:
+      return "Phew!";
+    default:
+      return "Well done!";
+  }
+}
