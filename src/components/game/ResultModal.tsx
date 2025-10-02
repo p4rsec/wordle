@@ -132,11 +132,23 @@ export default function ResultModal({
                       {attempts.length}
                     </div>
                   </div>
-                  <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-3">
+                  <div
+                    className={`rounded-lg p-3 ${
+                      isWon
+                        ? "bg-green-100 dark:bg-green-900"
+                        : "bg-red-100 dark:bg-red-900"
+                    }`}
+                  >
                     <div className="font-semibold text-gray-900 dark:text-white">
                       Status
                     </div>
-                    <div className="text-2xl font-bold text-gray-600 dark:text-gray-300">
+                    <div
+                      className={`text-2xl font-bold ${
+                        isWon
+                          ? "text-green-600 dark:text-green-400"
+                          : "text-red-600 dark:text-red-400"
+                      }`}
+                    >
                       {isWon ? "Won" : "Lost"}
                     </div>
                   </div>
